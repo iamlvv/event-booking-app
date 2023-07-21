@@ -1,0 +1,171 @@
+{
+    "name": "test",
+    "startDate": "2020-10-09T17:00:00.000Z",
+    "description": "lorem ipsum",
+    "price": {
+        "normal": 2,
+        "vip": 4,
+        "couple": 5
+    },
+    "location": "location",
+    "seats": [
+        {
+            "seatName": "A0",
+            "isReserved": false,
+            "seatType": "n"
+        },
+        {
+            "seatName": "A1",
+            "isReserved": false,
+            "seatType": "n"
+        },
+        {
+            "seatName": "A2",
+            "isReserved": false,
+            "seatType": "n"
+        },
+        {
+            "seatName": "A3",
+            "isReserved": false,
+            "seatType": "n"
+        },
+        {
+            "seatName": "A4",
+            "isReserved": false,
+            "seatType": "n"
+        },
+        {
+            "seatName": "B0",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B1",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B2",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B3",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B4",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B5",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B6",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B7",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B8",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "B9",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "C0",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "C1",
+            "isReserved": false,
+            "seatType": "v"
+        },
+        {
+            "seatName": "D0",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D1",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D2",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D3",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D4",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D5",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D6",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D7",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D8",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "D9",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "E0",
+            "isReserved": false,
+            "seatType": "c"
+        },
+        {
+            "seatName": "E1",
+            "isReserved": false,
+            "seatType": "c"
+        }
+    ],
+    "seatsRemain": 29,
+    "_id": "64ba4480be65473b1d553931"
+}
+
+
+
+
+
+
+
+
+
+
+

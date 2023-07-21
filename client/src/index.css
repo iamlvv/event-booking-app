@@ -1,16 +1,108 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+  margin: 0 auto;
+  width: 1440px;
+  font-family: 'Bree Serif', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+h1, h2 {
+  font-family: 'Bowlby One SC', cursive;
+}
+
+h1 {
+  color: #F33E55;
+  font-size: 48px;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.heading {
+  font-family: 'Bowlby One SC', cursive;
+}
+
+.header, .footer {
+  background-color: #282634;
+  color: #fff;
+}
+
+.item-rounded {
+  border-radius: 16px;
+}
+
+.search-bar {
+  width: 685px;
+  height: 81px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  align-items: center;
+  column-gap: 100px;
+}
+
+.input-field {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 0 20px;
+  font-size: 24px;
+}
+.input-field:focus {
+  outline: none;
+}
+
+.event-item {
+  width: 383px;
+  height: 308px
+}
+
+.img-rounded {
+  border-radius: 16px 16px 0 0;
+}
+
+.button {
+  background-color: #F33E55;
+  color: #fff;
+}
+
+.vip-tickets {
+  background-color: #F33E55;
+  color: #fff;
+}
+
+.couple-tickets {
+  background-color: #CCD18D;
+  color: #fff;
+}
+
+.single-tickets {
+  background-color: #F7F7F7;
+  color: #000;
+}
+
+.booking-status {
+  width: 331px;
+}
+
+.seat {
+  width: 70px;
+  height: 70px;
+  
+}
+@media screen and (min-width: 1440px) {
+  body {
+    width: 1440px;
+    margin: auto;
+  }
+}
+
 
 @tailwind base;
 @tailwind components;
