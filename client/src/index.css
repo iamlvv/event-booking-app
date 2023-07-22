@@ -4,29 +4,31 @@ body {
     sans-serif; */
   margin: 0 auto;
   width: 1440px;
-  font-family: 'Bree Serif', serif;
+  font-family: "Bree Serif", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-h1, h2 {
-  font-family: 'Bowlby One SC', cursive;
+h1,
+h2 {
+  font-family: "Bowlby One SC", cursive;
 }
 
 h1 {
-  color: #F33E55;
+  color: #f33e55;
   font-size: 48px;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .heading {
-  font-family: 'Bowlby One SC', cursive;
+  font-family: "Bowlby One SC", cursive;
 }
 
-.header, .footer {
+.header,
+.footer {
   background-color: #282634;
   color: #fff;
 }
@@ -60,7 +62,7 @@ code {
 
 .event-item {
   width: 383px;
-  height: 308px
+  height: 308px;
 }
 
 .img-rounded {
@@ -68,22 +70,22 @@ code {
 }
 
 .button {
-  background-color: #F33E55;
+  background-color: #f33e55;
   color: #fff;
 }
 
 .vip-tickets {
-  background-color: #F33E55;
+  background-color: #f33e55;
   color: #fff;
 }
 
 .couple-tickets {
-  background-color: #CCD18D;
+  background-color: #ccd18d;
   color: #fff;
 }
 
 .single-tickets {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   color: #000;
 }
 
@@ -94,15 +96,19 @@ code {
 .seat {
   width: 70px;
   height: 70px;
-  
-}
-@media screen and (min-width: 1440px) {
-  body {
-    width: 1440px;
-    margin: auto;
-  }
 }
 
+.form {
+  width: 888px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 1200px) {
+  body {
+    width: 1440px;
+    margin: 0 auto;
+  }
+}
 
 @tailwind base;
 @tailwind components;

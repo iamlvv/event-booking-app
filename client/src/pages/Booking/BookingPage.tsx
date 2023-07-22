@@ -4,9 +4,11 @@ import Footer from "../../components/Footer";
 import SeatMap from "./components/SeatMap";
 import eventDetail from "../../components/eventDetail.json";
 import { ISeatDetail, ISeatPrice } from "../../interface/Interfaces";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const BookingPage = (props: Props) => {
+  const navigate = useNavigate();
   // seatPrices is an object with 3 keys: normal, couple, vip
   const [seatPrices, setSeatPrices] = useState<ISeatPrice>(eventDetail.price);
 
@@ -30,6 +32,10 @@ const BookingPage = (props: Props) => {
     setTotalPrice(totalPrice);
   }, [selectedSeatList, seatPrices]);
 
+  const handleBooking = () => {
+    navigate("/confirm-booking");
+  };
+
   return (
     <div>
       <Header />
@@ -39,7 +45,7 @@ const BookingPage = (props: Props) => {
             <div>
               <img
                 src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
-                alt="profile picture"
+                alt="profile"
                 width={100}
                 height={100}
               />
@@ -59,7 +65,7 @@ const BookingPage = (props: Props) => {
               Seat: {selectedSeatList.map((seat) => seat.seatName + ", ")}
             </div>
             <div>Total price: {totalPrice}</div>
-            <div className="button text-center item-rounded p-3 cursor-pointer">
+            <div className="button text-center item-rounded p-3 cursor-pointer" onClick = {handleBooking}>
               BOOK!
             </div>
           </div>
