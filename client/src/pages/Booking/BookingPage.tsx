@@ -17,6 +17,13 @@ const BookingPage = (props: Props) => {
   );
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
+  useEffect(() => {
+    const selectedSeatList = localStorage.getItem("selectedSeatList");
+    if (selectedSeatList) {
+      setSelectedSeatList(JSON.parse(selectedSeatList));
+    }
+  }, []);
+
   // Calculate total price when selectedSeatList or seatPrices changes
   useEffect(() => {
     let totalPrice = 0;
@@ -33,7 +40,9 @@ const BookingPage = (props: Props) => {
   }, [selectedSeatList, seatPrices]);
 
   const handleBooking = () => {
-    navigate("/confirm-booking");
+    localStorage.setItem("selectedSeatList", JSON.stringify(selectedSeatList));
+    localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
+    navigate("/booking/confirm-booking");
   };
 
   return (
@@ -62,10 +71,13 @@ const BookingPage = (props: Props) => {
               Booking status
             </div>
             <div>
-              Seat: {selectedSeatList.map((seat) => seat.seatName + ", ")}
+              Seat: {selectedSeatList.map((seat) => seat.seatName + " ")}
             </div>
             <div>Total price: {totalPrice}</div>
-            <div className="button text-center item-rounded p-3 cursor-pointer" onClick = {handleBooking}>
+            <div
+              className="button text-center item-rounded p-3 cursor-pointer"
+              onClick={handleBooking}
+            >
               BOOK!
             </div>
           </div>

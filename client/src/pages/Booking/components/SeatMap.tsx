@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import stage from "../../../assets/img/stage.png";
 import { ISeatDetail } from "../../../interface/Interfaces";
 import {
@@ -19,10 +19,54 @@ const SeatMap = (props: Props) => {
     []
   );
 
+  // Mark selected seat as reserved, and click on it again to unmark
+  const [seatState, setSeatState] = useState<Array<any>>([]);
+
+  useEffect(() => {
+    // const selectedSeatList = localStorage.getItem("selectedSeatList");
+    // if (selectedSeatList) {
+    //   setSelectedSeatList(JSON.parse(selectedSeatList));
+    // }
+    setSeatState(
+      props.seatList.map((seat) => {
+        return { ...seat, isSelected: false };
+      })
+    );
+  }, []);
+
+  useEffect(() => {
+    props.setSelectedSeatList(selectedSeatList);
+  }, [selectedSeatList]);
+
   const handleChooseSeat = (seat: ISeatDetail) => {
-    setSelectedSeat(seat);
-    setSelectedSeatList([...selectedSeatList, seat]);
-    props.setSelectedSeatList([...selectedSeatList, seat]);
+    console.log(seat);
+    setSelectedSeat((selectedSeat) => {
+      if (selectedSeat === seat) {
+        return null;
+      } else {
+        return seat;
+      }
+    });
+
+    // setSeatState((previousSeatState) =>
+    //   previousSeatState.map((seatState) => {
+    //     if (seatState.seatName === seat.seatName) {
+    //       return { ...seatState, isSelected: !seatState.isSelected };
+    //     }
+    //     return seatState;
+    //   })
+    // );
+    // console.log(seatState);
+
+    if (selectedSeatList.includes(seat)) {
+      const newSelectedSeatList = selectedSeatList.filter(
+        (selectedSeat) => selectedSeat !== seat
+      );
+      setSelectedSeatList(newSelectedSeatList);
+    } else if (!selectedSeatList.includes(seat)) {
+      const newSelectedSeatList = [...selectedSeatList, seat];
+      setSelectedSeatList(newSelectedSeatList);
+    }
   };
   return (
     <div>
@@ -45,7 +89,12 @@ const SeatMap = (props: Props) => {
                     seat.isReserved ? SEAT_RESERVED : VIP_SEAT_AVAILABLE
                   }
                   key={seat.seatName}
-                  onClick={() => handleChooseSeat(seat)}
+                  onClick={() => {
+                    if (seat.isReserved) {
+                      return;
+                    }
+                    handleChooseSeat(seat);
+                  }}
                 >
                   {seat.seatName}
                 </div>
@@ -61,7 +110,12 @@ const SeatMap = (props: Props) => {
                     seat.isReserved ? SEAT_RESERVED : COUPLE_SEAT_AVAILABLE
                   }
                   key={seat.seatName}
-                  onClick={() => handleChooseSeat(seat)}
+                  onClick={() => {
+                    if (seat.isReserved) {
+                      return;
+                    }
+                    handleChooseSeat(seat);
+                  }}
                 >
                   {seat.seatName}
                 </div>
@@ -77,7 +131,12 @@ const SeatMap = (props: Props) => {
                     seat.isReserved ? SEAT_RESERVED : NORMAL_SEAT_AVAILABLE
                   }
                   key={seat.seatName}
-                  onClick={() => handleChooseSeat(seat)}
+                  onClick={() => {
+                    if (seat.isReserved) {
+                      return;
+                    }
+                    handleChooseSeat(seat);
+                  }}
                 >
                   {seat.seatName}
                 </div>
