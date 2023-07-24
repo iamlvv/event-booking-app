@@ -1,164 +1,80 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import dayjs from "dayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import CreateEventInput from "./components/CreateEventInput";
+import Swal from "sweetalert2";
 
 type Props = {};
 
 const CreateEventPage = (props: Props) => {
   const [startDate, setStartDate] = React.useState<Date | null | string>("");
+  const [startTime, setStartTime] = React.useState<Date | null | string>("");
+  const [eventName, setEventName] = React.useState<string>("");
+  const [location, setLocation] = React.useState<string>("");
+  const [vipTickets, setVipTickets] = React.useState<number>(0);
+  const [vipPrice, setVipPrice] = React.useState<number>(0);
+  const [coupleTickets, setCoupleTickets] = React.useState<number>(0);
+  const [couplePrice, setCouplePrice] = React.useState<number>(0);
+  const [normalTickets, setNormalTickets] = React.useState<number>(0);
+  const [normalPrice, setNormalPrice] = React.useState<number>(0);
+  const [uploadImage, setUploadImage] = React.useState<File | string>(
+    "fileurl"
+  );
+  const handleCreateNewEvent = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (startDate === "" || startTime === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a date and a time!",
+      });
+      return;
+    }
+    if (uploadImage === "fileurl") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please upload an image!",
+      });
+      return;
+    }
+    const file = uploadImage as File;
+    const formData = new FormData();
+    formData.append("image", file);
+  };
+
   return (
     <div>
       <Header />
-      <form className="form p-5 shadow-md border rounded-md my-20">
+      <form
+        className="form p-5 shadow-md border rounded-md my-20"
+        onSubmit={handleCreateNewEvent}
+      >
         <h1 className="text-center text-4xl mb-5">Create new event</h1>
-        <div className="flex flex-col gap-y-3">
-          <div className="flex flex-row items-center gap-x-5">
-            <div className="heading">event name</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Event Name"
-                variant="outlined"
-              />
-            </Box>
-          </div>
-          <div className="flex flex-row items-center gap-x-8">
-            <div className="heading">start date</div>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DatePicker"]}>
-                <DatePicker
-                  label="Start Date"
-                  value={startDate || null}
-                  onChange={(value) => setStartDate(dayjs(value).toDate())}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
-          </div>
-          <div className="flex flex-row items-center gap-x-10">
-            <div className="heading">location</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Location"
-                variant="outlined"
-              />
-            </Box>
-          </div>
-        </div>
-        <div className="flex flex-col gap-y-5">
-          <div className="flex flex-row items-center justify-between heading">
-            <div>number of vip tickets:</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Vip tickets"
-                variant="outlined"
-              />
-            </Box>
-            <div>price</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField id="outlined-basic" label="Price" variant="outlined" />
-            </Box>
-          </div>
-          <div className="flex flex-row items-center justify-between heading">
-            <div>number of couple tickets:</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Couple tickets"
-                variant="outlined"
-              />
-            </Box>
-            <div>price</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField id="outlined-basic" label="Price" variant="outlined" />
-            </Box>
-          </div>
-          <div className="flex flex-row items-center justify-between heading">
-            <div>number of normal tickets:</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField
-                id="outlined-basic"
-                label="Normal tickets"
-                variant="outlined"
-              />
-            </Box>
-            <div>price</div>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-              autoComplete="off"
-            >
-              <TextField id="outlined-basic" label="Price" variant="outlined" />
-            </Box>
-          </div>
-          <div className="flex flex-row gap-x-10 items-center">
-            <div className="heading">upload image:</div>
-            <div>
-              <input type="file" title="Upload" />
-            </div>
-          </div>
-        </div>
-
+        <CreateEventInput
+          startDate={startDate}
+          setStartDate={setStartDate}
+          startTime={startTime}
+          setStartTime={setStartTime}
+          eventName={eventName}
+          setEventName={setEventName}
+          location={location}
+          setLocation={setLocation}
+          vipTickets={vipTickets}
+          setVipTickets={setVipTickets}
+          vipPrice={vipPrice}
+          setVipPrice={setVipPrice}
+          coupleTickets={coupleTickets}
+          setCoupleTickets={setCoupleTickets}
+          couplePrice={couplePrice}
+          setCouplePrice={setCouplePrice}
+          normalTickets={normalTickets}
+          setNormalTickets={setNormalTickets}
+          normalPrice={normalPrice}
+          setNormalPrice={setNormalPrice}
+          uploadImage={uploadImage}
+          setUploadImage={setUploadImage}
+        />
         <div className="text-center button w-40 m-auto item-rounded p-2 mt-5 text-3xl heading">
           <button type="submit" className="button text-center">
             create

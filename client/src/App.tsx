@@ -12,10 +12,10 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/" element={<Homepage itemsPerPage={9} />} />
+          <Route path="/booking/:id" element={<BookingPage />} />
           <Route
-            path="/booking/confirm-booking"
+            path="/booking/:id/confirm-booking"
             element={<ConfirmBookingPage />}
           />
           <Route path="/allbookings" element={<AllBookingsPage />} />

@@ -25,6 +25,7 @@ const BookingSearch = (props: Props) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               props.setPhoneNumber(e.target.value)
             }
+            required
           />
         </Box>
       </div>
@@ -40,6 +41,7 @@ const BookingSearch = (props: Props) => {
             variant="outlined"
             value={props.verificationCode || ""}
             onChange={(e) => props.setVerificationCode(e.target.value)}
+            required
           />
         </Box>
       </div>

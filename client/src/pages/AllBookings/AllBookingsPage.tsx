@@ -3,37 +3,48 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import BookingSearch from "./components/BookingSearch";
 import BookingItem from "./components/BookingItem";
+import { getBookingByPhoneNumberAndVerificationCode } from "../../components/actions/bookingActions";
+import { IBookingDetail } from "../../interface/Interfaces";
 type Props = {};
 
 const AllBookingsPage = (props: Props) => {
   const [phoneNumber, setPhoneNumber] = React.useState<string>("");
   const [verificationCode, setVerificationCode] = React.useState<string>("");
-  const [booking, setBooking] = React.useState<any>([]); // [
+  const [booking, setBooking] = React.useState<Array<IBookingDetail>>([]); // [
 
   const handleSearchBooking = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(phoneNumber, verificationCode);
+    getBookingByPhoneNumberAndVerificationCode({
+      phoneNumber,
+      verificationCode,
+      setBooking,
+    });
   };
 
   return (
     <div>
       <Header />
-      <div>
-        <form
-          className="flex flex-row items-center gap-x-5"
-          onSubmit={handleSearchBooking}
-        >
-          <BookingSearch
-            phoneNumber={phoneNumber}
-            verificationCode={verificationCode}
-            setPhoneNumber={setPhoneNumber}
-            setVerificationCode={setVerificationCode}
-          />
-          <div className="text-center button w-40 item-rounded p-2 text-2xl heading">
-            <button type="submit">Search</button>
-          </div>
-        </form>
-        <BookingItem booking={booking} />
+      <div className="min-h-screen">
+        <h1 className="text-4xl text-center mt-20 mb-10">
+          Search your bookings here
+        </h1>
+        <div className="">
+          <form
+            className="flex flex-row items-center gap-x-5 justify-center"
+            onSubmit={handleSearchBooking}
+          >
+            <BookingSearch
+              phoneNumber={phoneNumber}
+              verificationCode={verificationCode}
+              setPhoneNumber={setPhoneNumber}
+              setVerificationCode={setVerificationCode}
+            />
+            <div className="text-center button w-40 item-rounded p-2 text-2xl heading">
+              <button type="submit">Search</button>
+            </div>
+          </form>
+          <BookingItem booking={booking} />
+        </div>
       </div>
       <Footer />
     </div>

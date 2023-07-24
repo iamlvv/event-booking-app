@@ -6,6 +6,7 @@ import {
   NORMAL_SEAT_AVAILABLE,
   SEAT_RESERVED,
   VIP_SEAT_AVAILABLE,
+  VIP_SEAT_SELECTED,
 } from "../../../constants/seatsConstants";
 
 type Props = {
@@ -86,7 +87,11 @@ const SeatMap = (props: Props) => {
               seat.seatType === "v" && (
                 <div
                   className={
-                    seat.isReserved ? SEAT_RESERVED : VIP_SEAT_AVAILABLE
+                    seat.isReserved
+                      ? SEAT_RESERVED
+                      : selectedSeat?.seatName === seat.seatName
+                      ? VIP_SEAT_SELECTED
+                      : VIP_SEAT_AVAILABLE // if seat is reserved, then it is grey, else, if it is selected, then it is green, else, it is white
                   }
                   key={seat.seatName}
                   onClick={() => {
@@ -142,6 +147,24 @@ const SeatMap = (props: Props) => {
                 </div>
               )
           )}
+        </div>
+      </div>
+      <div className="flex flex-col gap-y-5 mb-20">
+        <div className="flex flex-row gap-x-3 items-center">
+          <div className="seat-type-info normal-tickets"></div>
+          <h2>Normal Tickets</h2>
+        </div>
+        <div className="flex flex-row gap-x-3 items-center">
+          <div className="seat-type-info couple-tickets"></div>
+          <h2>Couple Tickets</h2>
+        </div>
+        <div className="flex flex-row gap-x-3 items-center">
+          <div className="seat-type-info vip-tickets"></div>
+          <h2>Vip Tickets</h2>
+        </div>
+        <div className="flex flex-row gap-x-3 items-center">
+          <div className="seat-type-info chosen-tickets"></div>
+          <h2>Chosen Tickets</h2>
         </div>
       </div>
     </div>

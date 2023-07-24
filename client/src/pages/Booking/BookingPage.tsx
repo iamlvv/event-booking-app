@@ -2,22 +2,35 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import SeatMap from "./components/SeatMap";
-import eventDetail from "../../components/eventDetail.json";
-import { ISeatDetail, ISeatPrice } from "../../interface/Interfaces";
-import { useNavigate } from "react-router-dom";
+import {
+  IEventDetail,
+  ISeatDetail,
+  ISeatPrice,
+} from "../../interface/Interfaces";
+import { useNavigate, useParams } from "react-router-dom";
+import EventDetail from "./components/EventDetail";
+import { getEventById } from "../../components/actions/eventActions";
+import Swal from "sweetalert2";
+
 type Props = {};
 
 const BookingPage = (props: Props) => {
   const navigate = useNavigate();
-  // seatPrices is an object with 3 keys: normal, couple, vip
-  const [seatPrices, setSeatPrices] = useState<ISeatPrice>(eventDetail.price);
 
+  const { id } = useParams();
+  // seatPrices is an object with 3 keys: normal, couple, vip
+  const [seatPrices, setSeatPrices] = useState<ISeatPrice>({} as ISeatPrice);
+  const [seatList, setSeatList] = useState<Array<ISeatDetail>>([]);
+  const [eventDetail, setEventDetail] = useState<IEventDetail>(
+    {} as IEventDetail
+  );
   const [selectedSeatList, setSelectedSeatList] = useState<Array<ISeatDetail>>(
     []
   );
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
+    getEventById({ id, setEvent: setEventDetail, setSeatList, setSeatPrices });
     const selectedSeatList = localStorage.getItem("selectedSeatList");
     if (selectedSeatList) {
       setSelectedSeatList(JSON.parse(selectedSeatList));
@@ -40,9 +53,17 @@ const BookingPage = (props: Props) => {
   }, [selectedSeatList, seatPrices]);
 
   const handleBooking = () => {
+    if (selectedSeatList.length === 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select at least one seat!",
+      });
+      return;
+    }
     localStorage.setItem("selectedSeatList", JSON.stringify(selectedSeatList));
     localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
-    navigate("/booking/confirm-booking");
+    navigate(`/booking/${id}/confirm-booking`);
   };
 
   return (
@@ -50,22 +71,7 @@ const BookingPage = (props: Props) => {
       <Header />
       <div className="mt-10">
         <div className="flex flex-row justify-between px-20">
-          <div className="flex flex-row gap-x-5">
-            <div>
-              <img
-                src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
-                alt="profile"
-                width={100}
-                height={100}
-              />
-            </div>
-            <div className="flex flex-col gap-y-5">
-              <div>{eventDetail.name}</div>
-              <div>{eventDetail.startDate}</div>
-              <div>{eventDetail.location}</div>
-              <div>{eventDetail.description}</div>
-            </div>
-          </div>
+          <EventDetail eventDetail={eventDetail} />
           <div className="flex flex-col gap-y-5 item-rounded border shadow-md p-5 booking-status">
             <div className="text-center uppercase font-bold">
               Booking status
@@ -83,7 +89,7 @@ const BookingPage = (props: Props) => {
           </div>
         </div>
         <SeatMap
-          seatList={eventDetail.seats}
+          seatList={seatList}
           setSelectedSeatList={setSelectedSeatList}
         />
       </div>

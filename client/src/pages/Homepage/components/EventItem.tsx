@@ -8,15 +8,16 @@ type Props = {
   startDate: string;
   seatsLeft: number;
   location: string;
+  id: string;
 };
 
 const EventItem = (props: Props) => {
   const navigate = useNavigate();
   const handleBookingEvent = () => {
-    navigate("/booking");
+    navigate(`/booking/${props.id}`);
   };
   return (
-    <div className="border item-rounded event-item">
+    <div className="border item-rounded event-item hover:shadow-md transition ease-in-out">
       <div>
         <img src={props.src} alt={props.alt} className="img-rounded" />
       </div>
@@ -28,10 +29,11 @@ const EventItem = (props: Props) => {
         </div>
         <div className="flex flex-col items-center gap-y-10">
           <div>{props.location}</div>
-          <div className="button p-5 item-rounded">
-            <button type="button" onClick={handleBookingEvent}>
-              Book now
-            </button>
+          <div
+            className="button p-5 item-rounded cursor-pointer"
+            onClick={handleBookingEvent}
+          >
+            Book now
           </div>
         </div>
       </div>

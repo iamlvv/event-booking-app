@@ -33,6 +33,14 @@ code {
   color: #fff;
 }
 
+.navigation:hover {
+  color: #f33e55;
+}
+
+.navigation-active {
+  color: #f33e55;
+}
+
 .item-rounded {
   border-radius: 16px;
 }
@@ -45,11 +53,11 @@ code {
   justify-content: space-between;
   padding: 0 20px;
   align-items: center;
-  column-gap: 100px;
+  column-gap: 10px;
 }
 
 .input-field {
-  width: 100%;
+  width: 550px;
   height: 100%;
   border: none;
   border-radius: 16px;
@@ -75,18 +83,27 @@ code {
 }
 
 .vip-tickets {
-  background-color: #f33e55;
+  background-color: #fef9c3;
   color: #fff;
 }
 
 .couple-tickets {
-  background-color: #ccd18d;
+  background-color: #fce7f3;
   color: #fff;
 }
 
-.single-tickets {
-  background-color: #f7f7f7;
+.normal-tickets {
+  background-color: #dcfce7;
   color: #000;
+}
+
+.chosen-tickets {
+  background-color: #d9d9d9;
+  color: #fff;
+}
+.seat-type-info {
+  width: 50px;
+  height: 50px;
 }
 
 .booking-status {
