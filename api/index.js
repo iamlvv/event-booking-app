@@ -123,7 +123,7 @@ app.post('/api/event/:id/booking', async (req, res) => {
   bookedEvent.seatsRemain -= seatName.length
   await sendVerificationCode(newBooking,bookedEvent)
   await bookedEvent.save()
-  // await newBooking.save()
+  await newBooking.save()
   res.json(newBooking)
 })
 
