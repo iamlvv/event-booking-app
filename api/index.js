@@ -48,9 +48,15 @@ app.get('/api/events', async (req, res) => {
 })
 
 app.get('/api/events/:id', async (req, res) => {
-  const { id } = req.params
-  const foundEvent = await Event.findById(id)
-  res.json(foundEvent)
+  try{
+    const { id } = req.params
+    const foundEvent = await Event.findById(id)
+    res.json(foundEvent)
+  } catch(e){
+    res.status(400).json({
+      message:e
+    })
+  }
 })
 
 app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
@@ -96,7 +102,7 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
 
 app.post('/api/booking', async (req, res) => {
   const { phoneNumber, verificationCode } = req.body
-  const foundBooking = Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
+  const foundBooking = await Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
   res.json(foundBooking)
 })
 
