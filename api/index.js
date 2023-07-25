@@ -1,7 +1,13 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 // Framework and Libs
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const multer = require('multer')
+
 //
 
 // Modules
@@ -10,15 +16,20 @@ const Booking = require('./models/Booking')
 const insertSeats = require('./utils/insertSeats')
 const generateRandomCode = require('./utils/genRandomCode')
 const isEmptyObject = require('./utils/isEmptyObject')
+const { storage } = require('./cloudinary/index')
+const {sendVerificationCode} = require('./mail/index')
 //
 
+const upload = multer({ storage })
 const app = express()
 
 app.use(cors())
 app.use(express.json())
 
+const dbUrl = process.env.DB_URL
+
 // Connection
-mongoose.connect('mongodb+srv://anhtuandao1311:HpLop8yOKqNDDYEo@netpower-booking-event.aypc1w0.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(dbUrl)
 //
 
 app.get('/api/events', async (req, res) => {
@@ -26,8 +37,11 @@ app.get('/api/events', async (req, res) => {
   if (isEmptyObject(req.query)) {
     return res.json(allEvents)
   }
-  const {q} = req.query
-  const searchedEvents = allEvents.filter((event)=>{
+  const { q } = req.query
+  if (!q) {
+    return res.json(allEvents)
+  }
+  const searchedEvents = allEvents.filter((event) => {
     return event.name.includes(q)
   })
   res.json(searchedEvents)
@@ -39,7 +53,7 @@ app.get('/api/events/:id', async (req, res) => {
   res.json(foundEvent)
 })
 
-app.post('/api/events/new', async (req, res) => {
+app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
   const {
     name,
     startDate,
@@ -73,13 +87,17 @@ app.post('/api/events/new', async (req, res) => {
     seats: seats,
     seatsRemain: normalSeatNum + vipSeatNum + coupleSeatNum
   })
+  newEvent.image.url = req.file.path
+  newEvent.image.fileName = req.file.filename
   await newEvent.save()
   res.json(newEvent)
 })
 
-app.get('/api/bookings', async (req, res) => {
-  const allBookings = Booking.find({})
-  res.json(allBookings)
+
+app.post('/api/booking', async (req, res) => {
+  const { phoneNumber, verificationCode } = req.body
+  const foundBooking = Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
+  res.json(foundBooking)
 })
 
 app.post('/api/event/:id/booking', async (req, res) => {
@@ -95,22 +113,22 @@ app.post('/api/event/:id/booking', async (req, res) => {
     bookingPrice: bookingPrice,
     verificationCode: verificationCode
   })
-
   const bookedEvent = await Event.findById(id)
-  for (let seat in bookedEvent.seats) {
-    if (seat.seatName in seatName) {
+  for (let seat of bookedEvent.seats) {
+    if (seatName.includes(seat.seatName)) {
       seat.isReserved = true
       seat.phoneNumber = phoneNumber
     }
   }
-
+  bookedEvent.seatsRemain -= seatName.length
+  await sendVerificationCode(newBooking,bookedEvent)
   await bookedEvent.save()
-  await newBooking.save()
+  // await newBooking.save()
   res.json(newBooking)
 })
 
 app.listen(5000, () => {
-  console.log('Listening on port 3000')
+  console.log('Listening on port 5000')
 })
 
 // mongodb+srv://anhtuandao1311:HpLop8yOKqNDDYEo@netpower-booking-event.aypc1w0.mongodb.net/?retryWrites=true&w=majority
