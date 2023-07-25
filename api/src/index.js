@@ -18,13 +18,14 @@ const generateRandomCode = require('./utils/genRandomCode')
 const isEmptyObject = require('./utils/isEmptyObject')
 const { storage } = require('./cloudinary/index')
 const {sendVerificationCode} = require('./mail/index')
+const routes = require('./routes')
 //
 
 const upload = multer({ storage })
 const app = express()
 
-app.use(cors())
 app.use(express.json())
+app.use(cors())
 
 const dbUrl = process.env.DB_URL
 
@@ -32,7 +33,9 @@ const dbUrl = process.env.DB_URL
 mongoose.connect(dbUrl)
 //
 
-app.get('/api/events', async (req, res) => {
+routes(app)
+
+app.get('/api/event', async (req, res) => {
   const allEvents = await Event.find({})
   if (isEmptyObject(req.query)) {
     return res.json(allEvents)
@@ -47,7 +50,7 @@ app.get('/api/events', async (req, res) => {
   res.json(searchedEvents)
 })
 
-app.get('/api/events/:id', async (req, res) => {
+app.get('/api/event/:id', async (req, res) => {
   try{
     const { id } = req.params
     const foundEvent = await Event.findById(id)
@@ -59,7 +62,7 @@ app.get('/api/events/:id', async (req, res) => {
   }
 })
 
-app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
+app.post('/api/event/new', upload.single('eventImage'), async (req, res) => {
   const {
     name,
     startDate,
