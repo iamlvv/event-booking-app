@@ -46,7 +46,7 @@ export const createNewBooking = async (props: createNewBookingProps) => {
 type getBookingByPhoneNumberAndVerificationCodeProps = {
   phoneNumber: string;
   verificationCode: string;
-  setBooking: Dispatch<SetStateAction<IBookingDetail[]>>;
+  setBooking: Dispatch<SetStateAction<IBookingDetail>>;
 };
 export const getBookingByPhoneNumberAndVerificationCode = async (
   props: getBookingByPhoneNumberAndVerificationCodeProps
@@ -55,13 +55,18 @@ export const getBookingByPhoneNumberAndVerificationCode = async (
     const response = await axios.post(
       GET_BOOKING_BY_PHONE_NUMBER_AND_VERIFICATION_CODE_API_URL,
       {
-        phone: props.phoneNumber,
+        phoneNumber: props.phoneNumber,
         verificationCode: props.verificationCode,
       }
     );
     console.log(response.data);
     props.setBooking(response.data);
   } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: `Your phone number or verification code is incorrect! Or there is some thing wrong.`,
+    });
     console.log(error);
   }
 };

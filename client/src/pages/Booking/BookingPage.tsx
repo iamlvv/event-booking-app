@@ -31,10 +31,10 @@ const BookingPage = (props: Props) => {
 
   useEffect(() => {
     getEventById({ id, setEvent: setEventDetail, setSeatList, setSeatPrices });
-    const selectedSeatList = localStorage.getItem("selectedSeatList");
-    if (selectedSeatList) {
-      setSelectedSeatList(JSON.parse(selectedSeatList));
-    }
+    // const selectedSeatList = localStorage.getItem("selectedSeatList");
+    // if (selectedSeatList) {
+    //   setSelectedSeatList(JSON.parse(selectedSeatList));
+    // }
   }, []);
 
   // Calculate total price when selectedSeatList or seatPrices changes

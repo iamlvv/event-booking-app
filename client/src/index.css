@@ -67,6 +67,15 @@ code {
 .input-field:focus {
   outline: none;
 }
+.search-result {
+  top: 400px;
+  width: 685px;
+  border-radius: 16px;
+  left: 32%;
+  border-width: 0 1px 1px 1px;
+  border-style: solid;
+  border-color: #e5e5e5;
+}
 
 .event-item {
   width: 383px;
@@ -98,7 +107,7 @@ code {
 }
 
 .chosen-tickets {
-  background-color: #d9d9d9;
+  background-color: #6b7280;
   color: #fff;
 }
 .seat-type-info {
@@ -118,6 +127,10 @@ code {
 .form {
   width: 888px;
   margin: 0 auto;
+}
+
+.lists {
+  max-height: 300px;
 }
 
 @media screen and (min-width: 1200px) {

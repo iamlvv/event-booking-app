@@ -7,14 +7,13 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 type Props = {
   eventName: string;
   setEventName: React.Dispatch<React.SetStateAction<string>>;
   startDate: Date | null | string;
   setStartDate: React.Dispatch<React.SetStateAction<Date | null | string>>;
-  startTime: Date | null | string;
-  setStartTime: React.Dispatch<React.SetStateAction<Date | null | string>>;
   location: string;
   setLocation: React.Dispatch<React.SetStateAction<string>>;
   vipTickets: number;
@@ -31,6 +30,8 @@ type Props = {
   setNormalPrice: React.Dispatch<React.SetStateAction<number>>;
   uploadImage: File | string;
   setUploadImage: React.Dispatch<React.SetStateAction<File | string>>;
+  description: string;
+  setDescription: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const CreateEventInput = (props: Props) => {
@@ -59,7 +60,7 @@ const CreateEventInput = (props: Props) => {
           <div className="heading">start date and time:</div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "TimePicker"]}>
-              <DatePicker
+              {/* <DatePicker
                 label="Start Date"
                 value={props.startDate || null}
                 onChange={(value) => props.setStartDate(dayjs(value).toDate())}
@@ -68,6 +69,11 @@ const CreateEventInput = (props: Props) => {
                 label="Start Time"
                 value={props.startTime || null}
                 onChange={(value) => props.setStartTime(dayjs(value).toDate())}
+              /> */}
+              <DateTimePicker
+                label="Start Date and Time"
+                value={props.startDate || null}
+                onChange={(value) => props.setStartDate(dayjs(value).toDate())}
               />
             </DemoContainer>
           </LocalizationProvider>
@@ -86,6 +92,24 @@ const CreateEventInput = (props: Props) => {
               variant="outlined"
               value={props.location || ""}
               onChange={(e) => props.setLocation(e.target.value)}
+              required
+            />
+          </Box>
+        </div>
+        <div className="flex flex-row items-center gap-x-10">
+          <div className="heading">description:</div>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch" },
+            }}
+          >
+            <TextField
+              type="text"
+              id="outlined-basic"
+              label="Description"
+              variant="outlined"
+              value={props.description || ""}
+              onChange={(e) => props.setDescription(e.target.value)}
               required
             />
           </Box>

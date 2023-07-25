@@ -10,15 +10,20 @@ import {
   GET_ALL_EVENTS_API_URL,
   GET_EVENT_BY_ID_API_URL,
 } from "../../constants/APIConstants";
+import { Dispatch, SetStateAction } from "react";
 
 type getAllEventsProps = {
   setEvents: (events: IEventDetail[]) => void;
+  setFilteredEvents: (events: IEventDetail[]) => void;
+  setOriginalEventsList: (events: IEventDetail[]) => void;
 };
 // This function is used to get all events from the database
 export const getAllEvents = async (props: getAllEventsProps) => {
   try {
     const response = await axios.get(GET_ALL_EVENTS_API_URL);
     props.setEvents(response.data);
+    props.setFilteredEvents(response.data);
+    props.setOriginalEventsList(response.data);
   } catch (error) {
     console.log(error);
   }
@@ -68,7 +73,6 @@ type createNewEventProps = {
   description: string;
   location: string;
   startDate: string;
-  startTime: string;
   vipTickets: number;
   vipPrice: number;
   normalTickets: number;
@@ -84,15 +88,14 @@ export const createNewEvent = async (props: createNewEventProps) => {
       name: props.name,
       description: props.description,
       location: props.location,
-      startDate: props.startDate,
-      startTime: props.startTime,
+      startDate: new Date(props.startDate).toLocaleString(),
       vipTickets: props.vipTickets,
       vipPrice: props.vipPrice,
       normalTickets: props.normalTickets,
       normalPrice: props.normalPrice,
       coupleTickets: props.coupleTickets,
       couplePrice: props.couplePrice,
-      image: props.image,
+      eventImage: props.image,
     });
     Swal.fire({
       icon: "success",
@@ -120,6 +123,55 @@ export const searchEvent = async (props: searchEventProps) => {
       GET_ALL_EVENTS_API_URL + `?q=${props.searchValue}`
     );
     props.setEvents(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// This function is used to get number of events in the system
+type numberOfEventsProps = {
+  setNumberOfEvents: Dispatch<SetStateAction<number>>;
+};
+export const getNumberOfEvents = async (props: numberOfEventsProps) => {
+  try {
+    const response = await axios.get(GET_ALL_EVENTS_API_URL);
+    props.setNumberOfEvents(response.data.length);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// This function is used to get events that have been sold out in the system
+type getSoldOutEventsProps = {
+  setEventsSoldOut: Dispatch<SetStateAction<Array<IEventDetail>>>;
+  setNumberOfSoldOutEvents: Dispatch<SetStateAction<number>>;
+};
+export const getSoldOutEvents = async (props: getSoldOutEventsProps) => {
+  try {
+    const response = await axios.get(GET_ALL_EVENTS_API_URL);
+    const soldOutEvents = response.data.filter(
+      (event: IEventDetail) => event.seatsRemain === 0
+    );
+    props.setEventsSoldOut(soldOutEvents);
+    props.setNumberOfSoldOutEvents(soldOutEvents.length);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// This function is used to get events that still have seats
+type getEventsWithSeatsProps = {
+  setEventsStillHaveSeats: Dispatch<SetStateAction<Array<IEventDetail>>>;
+  setNumberOfEventsStillHaveSeats: Dispatch<SetStateAction<number>>;
+};
+export const getEventsWithSeats = async (prop: getEventsWithSeatsProps) => {
+  try {
+    const response = await axios.get(GET_ALL_EVENTS_API_URL);
+    const eventsWithSeats = response.data.filter(
+      (event: IEventDetail) => event.seatsRemain > 0
+    );
+    prop.setEventsStillHaveSeats(eventsWithSeats);
+    prop.setNumberOfEventsStillHaveSeats(eventsWithSeats.length);
   } catch (error) {
     console.log(error);
   }

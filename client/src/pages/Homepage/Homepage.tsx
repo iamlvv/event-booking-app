@@ -6,6 +6,7 @@ import UpcomingEvents from "./components/UpcomingEvents";
 import { getAllEvents } from "../../components/actions/eventActions";
 import { IEventDetail } from "../../interface/Interfaces";
 import Pagination from "./components/Pagination";
+import SearchResult from "./components/SearchResult";
 
 type Props = {
   itemsPerPage: number;
@@ -14,10 +15,34 @@ type Props = {
 const Homepage = (props: Props) => {
   const [searchTerm, setSearchTerm] = React.useState<string>("");
   const [events, setEvents] = React.useState<Array<IEventDetail>>([]);
+  const [originalEventsList, setOriginalEventsList] = React.useState<
+    Array<IEventDetail>
+  >([]);
+  const [filteredEvents, setFilteredEvents] = React.useState<
+    Array<IEventDetail>
+  >([]);
 
   useEffect(() => {
-    getAllEvents({ setEvents });
+    getAllEvents({ setEvents, setFilteredEvents, setOriginalEventsList });
   }, []);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+  // Detect click outside of search result
+  const handleClickOutside = (e: any) => {
+    const searchResult = document.querySelector(".search-result");
+    const searchField = document.querySelector(".searchBar");
+    if (searchResult && searchField) {
+      if (!searchResult.contains(e.target) && !searchField.contains(e.target)) {
+        setSearchTerm("");
+      }
+    }
+  };
 
   // Create pagination
   var keyCount = Object.keys(events).length;
@@ -29,7 +54,6 @@ const Homepage = (props: Props) => {
     const newOffset = (e.selected * props.itemsPerPage) % keyCount;
     setItemOffset(newOffset);
   };
-
   return (
     <div>
       <Header />
@@ -42,7 +66,16 @@ const Homepage = (props: Props) => {
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           setEvents={setEvents}
+          setFilteredEvents={setFilteredEvents}
+          filteredEvents={filteredEvents}
+          events={originalEventsList}
         />
+        {searchTerm.length > 0 ? (
+          <SearchResult
+            searchTerm={searchTerm}
+            filteredEvents={filteredEvents}
+          />
+        ) : null}
         <UpcomingEvents events={currentItems} />
         <Pagination handlePageClick={handlePageClick} pageCount={pageCount} />
       </div>

@@ -24,11 +24,11 @@ export interface IEventDetail {
 
 export interface IBookingDetail {
   _id: string;
-  event: string;
+  event: IEventDetail;
   bookerName: string;
   email: string;
   phoneNumber: string;
-  seatName: Array<string>;
+  seatName: string[];
   bookingPrice: number;
   verificationCode: string;
   __v: number;

@@ -8,9 +8,9 @@ type Props = {};
 
 const CreateEventPage = (props: Props) => {
   const [startDate, setStartDate] = React.useState<Date | null | string>("");
-  const [startTime, setStartTime] = React.useState<Date | null | string>("");
   const [eventName, setEventName] = React.useState<string>("");
   const [location, setLocation] = React.useState<string>("");
+  const [description, setDescription] = React.useState<string>("");
   const [vipTickets, setVipTickets] = React.useState<number>(0);
   const [vipPrice, setVipPrice] = React.useState<number>(0);
   const [coupleTickets, setCoupleTickets] = React.useState<number>(0);
@@ -20,9 +20,10 @@ const CreateEventPage = (props: Props) => {
   const [uploadImage, setUploadImage] = React.useState<File | string>(
     "fileurl"
   );
+  console.log(startDate);
   const handleCreateNewEvent = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (startDate === "" || startTime === "") {
+    if (startDate === "") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -40,7 +41,36 @@ const CreateEventPage = (props: Props) => {
     }
     const file = uploadImage as File;
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("eventImage", file);
+    formData.append("name", eventName);
+    formData.append("startDate", startDate as string);
+    formData.append("location", location);
+    formData.append("vipSeatNum", vipTickets.toString());
+    formData.append("vipPrice", vipPrice.toString());
+    formData.append("coupleSeatNum", coupleTickets.toString());
+    formData.append("couplePrice", couplePrice.toString());
+    formData.append("normalSeatNum", normalTickets.toString());
+    formData.append("normalPrice", normalPrice.toString());
+    formData.append("description", description);
+    fetch("http://localhost:5000/api/events/new", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Event created successfully!",
+        });
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
   };
 
   return (
@@ -54,8 +84,6 @@ const CreateEventPage = (props: Props) => {
         <CreateEventInput
           startDate={startDate}
           setStartDate={setStartDate}
-          startTime={startTime}
-          setStartTime={setStartTime}
           eventName={eventName}
           setEventName={setEventName}
           location={location}
@@ -74,6 +102,8 @@ const CreateEventPage = (props: Props) => {
           setNormalPrice={setNormalPrice}
           uploadImage={uploadImage}
           setUploadImage={setUploadImage}
+          description={description}
+          setDescription={setDescription}
         />
         <div className="text-center button w-40 m-auto item-rounded p-2 mt-5 text-3xl heading">
           <button type="submit" className="button text-center">
