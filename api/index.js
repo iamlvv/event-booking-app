@@ -91,10 +91,12 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
     },
     location: location,
     seats: seats,
-    seatsRemain: normalSeatNum + vipSeatNum + coupleSeatNum
+    seatsRemain: normalSeatNum + vipSeatNum + coupleSeatNum,
+    image:{
+      url: req.file.path,
+      fileName: req.file.filename
+    }
   })
-  newEvent.image.url = req.file.path
-  newEvent.image.fileName = req.file.filename
   await newEvent.save()
   res.json(newEvent)
 })
