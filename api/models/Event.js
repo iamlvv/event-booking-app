@@ -4,11 +4,13 @@ const Schema = mongoose.Schema
 const ImageSchema = new Schema({
   url: {
     type: String,
-    required: true
+    required: true,
+    default:''
   },
   fileName: {
     type: String,
-    required: true
+    required: true,
+    default:''
   }
 })
 
