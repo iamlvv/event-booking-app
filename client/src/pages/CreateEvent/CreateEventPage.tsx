@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import CreateEventInput from "./components/CreateEventInput";
 import Swal from "sweetalert2";
+import { createNewEvent } from "../../components/actions/eventActions";
 
 type Props = {};
 
@@ -43,7 +44,7 @@ const CreateEventPage = (props: Props) => {
     const formData = new FormData();
     formData.append("eventImage", file);
     formData.append("name", eventName);
-    formData.append("startDate", startDate as string);
+    formData.append("startDate", new Date(startDate as Date).toLocaleString());
     formData.append("location", location);
     formData.append("vipSeatNum", vipTickets.toString());
     formData.append("vipPrice", vipPrice.toString());
@@ -71,6 +72,7 @@ const CreateEventPage = (props: Props) => {
           text: "Something went wrong!",
         });
       });
+    //createNewEvent({ formData });
   };
 
   return (

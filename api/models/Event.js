@@ -5,12 +5,12 @@ const ImageSchema = new Schema({
   url: {
     type: String,
     required: true,
-    default:''
+    default: ''
   },
   fileName: {
     type: String,
     required: true,
-    default:''
+    default: ''
   }
 })
 

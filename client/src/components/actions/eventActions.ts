@@ -69,33 +69,25 @@ export const getEventByIdForBooking = async (
 
 // This function is used to create a new event
 type createNewEventProps = {
-  name: string;
-  description: string;
-  location: string;
-  startDate: string;
-  vipTickets: number;
-  vipPrice: number;
-  normalTickets: number;
-  normalPrice: number;
-  coupleTickets: number;
-  couplePrice: number;
-  image: File;
+  formData: FormData;
 };
 
 export const createNewEvent = async (props: createNewEventProps) => {
+  console.log(props.formData);
   try {
     const response = await axios.post(CREATE_NEW_EVENT_API_URL, {
-      name: props.name,
-      description: props.description,
-      location: props.location,
-      startDate: new Date(props.startDate).toLocaleString(),
-      vipTickets: props.vipTickets,
-      vipPrice: props.vipPrice,
-      normalTickets: props.normalTickets,
-      normalPrice: props.normalPrice,
-      coupleTickets: props.coupleTickets,
-      couplePrice: props.couplePrice,
-      eventImage: props.image,
+      name: props.formData.get("name"),
+      description: props.formData.get("description"),
+      startDate: props.formData.get("startDate"),
+      endDate: props.formData.get("endDate"),
+      location: props.formData.get("location"),
+      eventImage: props.formData.get("eventImage"),
+      vipSeatNum: props.formData.get("vipSeatNum"),
+      vipPrice: props.formData.get("vipPrice"),
+      normalSeatNum: props.formData.get("normalSeatNum"),
+      normalPrice: props.formData.get("normalPrice"),
+      coupleSeatNum: props.formData.get("coupleSeatNum"),
+      couplePrice: props.formData.get("couplePrice"),
     });
     Swal.fire({
       icon: "success",

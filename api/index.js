@@ -17,7 +17,7 @@ const insertSeats = require('./utils/insertSeats')
 const generateRandomCode = require('./utils/genRandomCode')
 const isEmptyObject = require('./utils/isEmptyObject')
 const { storage } = require('./cloudinary/index')
-const {sendVerificationCode} = require('./mail/index')
+const { sendVerificationCode } = require('./mail/index')
 //
 
 const upload = multer({ storage })
@@ -48,13 +48,13 @@ app.get('/api/events', async (req, res) => {
 })
 
 app.get('/api/events/:id', async (req, res) => {
-  try{
+  try {
     const { id } = req.params
     const foundEvent = await Event.findById(id)
     res.json(foundEvent)
-  } catch(e){
+  } catch (e) {
     res.status(400).json({
-      message:e
+      message: e
     })
   }
 })
@@ -73,7 +73,7 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
     coupleSeatNum } = req.body
 
   let seatChar = { char: 'A' }
-
+  console.log(req.file)
   let normalSeats = insertSeats(normalSeatNum, 'n', seatChar)
   let vipSeats = insertSeats(vipSeatNum, 'v', seatChar)
   let coupleSeats = insertSeats(coupleSeatNum, 'c', seatChar)
@@ -92,11 +92,13 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
     location: location,
     seats: seats,
     seatsRemain: parseInt(normalSeatNum) + parseInt(vipSeatNum) + parseInt(coupleSeatNum),
-    image:{
+    image: {
       url: req.file.path,
       fileName: req.file.filename
     }
   })
+  newEvent.image.url = req.file.path
+  newEvent.image.fileName = req.file.filename
   await newEvent.save()
   res.json(newEvent)
 })
@@ -129,7 +131,7 @@ app.post('/api/event/:id/booking', async (req, res) => {
     }
   }
   bookedEvent.seatsRemain -= seatName.length
-  await sendVerificationCode(newBooking,bookedEvent)
+  await sendVerificationCode(newBooking, bookedEvent)
   await bookedEvent.save()
   await newBooking.save()
   res.json(newBooking)
