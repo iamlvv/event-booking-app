@@ -70,7 +70,8 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
     couplePrice,
     normalSeatNum,
     vipSeatNum,
-    coupleSeatNum } = req.body
+    coupleSeatNum,
+    isPublished } = req.body
 
   let seatChar = { char: 'A' }
   console.log(req.file)
@@ -81,6 +82,10 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
   const seats = normalSeats.concat(vipSeats, coupleSeats)
 
   const seatsRemain = parseInt(normalSeatNum) + parseInt(vipSeatNum) + parseInt(coupleSeatNum)
+
+  const isPublishedBoolean = false
+
+  if (isPublished === 'true') isPublishedBoolean = true
 
   const newEvent = new Event({
     name: name,
@@ -97,10 +102,10 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
     image: {
       url: req.file.path,
       fileName: req.file.filename
-    }
+    },
+    isPublished: isPublishedBoolean
   })
-  newEvent.image.url = req.file.path
-  newEvent.image.fileName = req.file.filename
+
   await newEvent.save()
   res.json(newEvent)
 })
