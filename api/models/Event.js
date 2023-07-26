@@ -5,17 +5,17 @@ const ImageSchema = new Schema({
   url: {
     type: String,
     required: true,
-    default:''
+    default: 'a'
   },
   fileName: {
     type: String,
     required: true,
-    default:''
+    default: 'a'
   }
 })
 
 ImageSchema.virtual('thumbnail').get(function () {
-  return this.url.replace('/upload','/upload/w_200')
+  return this.url.replace('/upload', '/upload/w_200')
 })
 
 const EventSchema = new Schema({
