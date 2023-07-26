@@ -80,6 +80,8 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
 
   const seats = normalSeats.concat(vipSeats, coupleSeats)
 
+  const seatsRemain = parseInt(normalSeatNum) + parseInt(vipSeatNum) + parseInt(coupleSeatNum)
+
   const newEvent = new Event({
     name: name,
     startDate: startDate,
@@ -91,7 +93,7 @@ app.post('/api/events/new', upload.single('eventImage'), async (req, res) => {
     },
     location: location,
     seats: seats,
-    seatsRemain: parseInt(normalSeatNum) + parseInt(vipSeatNum) + parseInt(coupleSeatNum),
+    seatsRemain: seatsRemain,
     image: {
       url: req.file.path,
       fileName: req.file.filename
