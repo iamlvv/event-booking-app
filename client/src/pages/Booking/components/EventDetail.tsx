@@ -10,15 +10,13 @@ const EventDetail = (props: Props) => {
     <div className="flex flex-row gap-x-5">
       <div>
         <img
-          src="https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
+          src={props.eventDetail.image ? props.eventDetail.image.url : ""}
           alt="profile"
-          width={100}
-          height={100}
         />
       </div>
       <div className="flex flex-col gap-y-5">
         <div>{props.eventDetail.name}</div>
-        <div>{props.eventDetail.startDate}</div>
+        <div>{new Date(props.eventDetail.startDate).toLocaleString()}</div>
         <div>{props.eventDetail.location}</div>
         <div>{props.eventDetail.description}</div>
       </div>

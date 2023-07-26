@@ -10,7 +10,7 @@ const BookingItem = (props: Props) => {
     <div>
       <div className="flex flex-row justify-center gap-x-10 items-center border item-rounded p-5 mt-10">
         <div>
-          <img src="https://picsum.photos/383/153" alt="event" />
+          <img src={props.booking.event.image.url} alt="event" />
         </div>
         <div className="heading col-span-1 flex flex-col gap-y-4">
           <div>event name: {props.booking.event.name}</div>

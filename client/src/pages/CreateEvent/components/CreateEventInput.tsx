@@ -5,9 +5,8 @@ import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import Switch from "@mui/material/Switch";
 
 type Props = {
   eventName: string;
@@ -32,6 +31,8 @@ type Props = {
   setUploadImage: React.Dispatch<React.SetStateAction<File | string>>;
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
+  isPublished: boolean;
+  setIsPublished: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CreateEventInput = (props: Props) => {
@@ -60,16 +61,6 @@ const CreateEventInput = (props: Props) => {
           <div className="heading">start date and time:</div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker", "TimePicker"]}>
-              {/* <DatePicker
-                label="Start Date"
-                value={props.startDate || null}
-                onChange={(value) => props.setStartDate(dayjs(value).toDate())}
-              />
-              <TimePicker
-                label="Start Time"
-                value={props.startTime || null}
-                onChange={(value) => props.setStartTime(dayjs(value).toDate())}
-              /> */}
               <DateTimePicker
                 label="Start Date and Time"
                 value={props.startDate || null}
@@ -229,6 +220,14 @@ const CreateEventInput = (props: Props) => {
               }}
             />
           </div>
+        </div>
+        <div className="flex flex-row items-center heading">
+          <div>do you want to publish this event right now?</div>
+          <Switch
+            checked={props.isPublished}
+            onChange={(e) => props.setIsPublished(e.target.checked)}
+            color="secondary"
+          />
         </div>
       </div>
     </div>

@@ -25,7 +25,7 @@ const SearchResult = (props: Props) => {
                 <img
                   width={100}
                   height={100}
-                  src="https://picsum.photos/383/153"
+                  src={event.image.url}
                   alt="event"
                 />
               </div>

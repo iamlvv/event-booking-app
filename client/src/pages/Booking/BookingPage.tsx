@@ -36,8 +36,8 @@ const BookingPage = (props: Props) => {
     //   setSelectedSeatList(JSON.parse(selectedSeatList));
     // }
   }, []);
-
-  // Calculate total price when selectedSeatList or seatPrices changes
+  console.log(eventDetail);
+  // Calculate tota l price when selectedSeatList or seatPrices changes
   useEffect(() => {
     let totalPrice = 0;
     selectedSeatList.forEach((seat) => {
@@ -70,7 +70,7 @@ const BookingPage = (props: Props) => {
     <div>
       <Header />
       <div className="mt-10">
-        <div className="flex flex-row justify-between px-20">
+        <div className="flex flex-row justify-between px-20 items-center">
           <EventDetail eventDetail={eventDetail} />
           <div className="flex flex-col gap-y-5 item-rounded border shadow-md p-5 booking-status">
             <div className="text-center uppercase font-bold">

@@ -10,6 +10,12 @@ export interface ISeatPrice {
   vip: number;
 }
 
+export interface IImage {
+  url: string;
+  fileName: string;
+  _id: string;
+}
+
 export interface IEventDetail {
   _id: string;
   description: string;
@@ -20,6 +26,8 @@ export interface IEventDetail {
   startDate: string;
   seats: ISeatDetail[];
   __v: number;
+  image: IImage;
+  isPublished: boolean;
 }
 
 export interface IBookingDetail {

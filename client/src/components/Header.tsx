@@ -61,6 +61,14 @@ const Header = (props: Props) => {
         >
           <li>all bookings</li>
         </NavLink>
+        <NavLink
+          to="/publishevents"
+          className={({ isActive }) =>
+            isActive ? NAVIGATION_ITEM_ACTIVE : NAVIGATION_ITEM_INACTIVE
+          }
+        >
+          <li>publish events</li>
+        </NavLink>
       </ul>
     </div>
   );

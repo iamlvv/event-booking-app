@@ -21,7 +21,7 @@ const EventDetailConfirm = (props: Props) => {
       </div>
       <div className="flex flex-col gap-y-4">
         <div>{props.eventName}</div>
-        <div>{props.startDate}</div>
+        <div>{new Date(props.startDate).toLocaleString()}</div>
         <div>{props.location}</div>
         <div className="flex flex-row gap-x-2">
           {props.seatReserved.length !== 0 ? (

@@ -8,7 +8,9 @@ import Swal from "sweetalert2";
 import {
   CREATE_NEW_EVENT_API_URL,
   GET_ALL_EVENTS_API_URL,
+  GET_ALL_UNPUBLISHED_EVENTS_API_URL,
   GET_EVENT_BY_ID_API_URL,
+  PUBLISH_AN_EVENT_API_URL,
 } from "../../constants/APIConstants";
 import { Dispatch, SetStateAction } from "react";
 
@@ -39,6 +41,7 @@ type getEventByIdProps = {
 export const getEventById = async (props: getEventByIdProps) => {
   try {
     const response = await axios.get(GET_EVENT_BY_ID_API_URL + `${props.id}`);
+    console.log("response data", response.data);
     props.setEvent(response.data);
     props.setSeatList(response.data.seats);
     props.setSeatPrices(response.data.price);
@@ -164,6 +167,46 @@ export const getEventsWithSeats = async (prop: getEventsWithSeatsProps) => {
     );
     prop.setEventsStillHaveSeats(eventsWithSeats);
     prop.setNumberOfEventsStillHaveSeats(eventsWithSeats.length);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// This function is used to get events that have not been published
+type getUnpublishedEventsProps = {
+  setUnPublishedEvents: Dispatch<SetStateAction<Array<IEventDetail>>>;
+  setNumberOfUnPublishedEvents: Dispatch<SetStateAction<number>>;
+};
+
+export const getUnpublishedEvents = async (
+  props: getUnpublishedEventsProps
+) => {
+  try {
+    const response = await axios.get(GET_ALL_UNPUBLISHED_EVENTS_API_URL);
+    props.setUnPublishedEvents(response.data);
+    props.setNumberOfUnPublishedEvents(response.data.length);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// This function is used to publish an event
+type publishAnEventProps = {
+  id: string;
+};
+
+export const publishAnEvent = async (props: publishAnEventProps) => {
+  try {
+    const response = await axios.put(PUBLISH_AN_EVENT_API_URL + `/${props.id}`);
+    Swal.fire({
+      icon: "success",
+      title: "Publish event success",
+      text: `You have published an event successfully!`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.reload();
+      }
+    });
   } catch (error) {
     console.log(error);
   }

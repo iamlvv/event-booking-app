@@ -3,7 +3,6 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import CreateEventInput from "./components/CreateEventInput";
 import Swal from "sweetalert2";
-import { createNewEvent } from "../../components/actions/eventActions";
 
 type Props = {};
 
@@ -21,7 +20,8 @@ const CreateEventPage = (props: Props) => {
   const [uploadImage, setUploadImage] = React.useState<File | string>(
     "fileurl"
   );
-  console.log(startDate);
+  const [isPublished, setIsPublished] = React.useState<boolean>(false);
+
   const handleCreateNewEvent = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (startDate === "") {
@@ -53,6 +53,7 @@ const CreateEventPage = (props: Props) => {
     formData.append("normalSeatNum", normalTickets.toString());
     formData.append("normalPrice", normalPrice.toString());
     formData.append("description", description);
+    formData.append("isPublished", isPublished.toString());
     fetch("http://localhost:5000/api/events/new", {
       method: "POST",
       body: formData,
@@ -106,6 +107,8 @@ const CreateEventPage = (props: Props) => {
           setUploadImage={setUploadImage}
           description={description}
           setDescription={setDescription}
+          isPublished={isPublished}
+          setIsPublished={setIsPublished}
         />
         <div className="text-center button w-40 m-auto item-rounded p-2 mt-5 text-3xl heading">
           <button type="submit" className="button text-center">

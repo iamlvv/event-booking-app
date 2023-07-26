@@ -9,6 +9,7 @@ type Props = {
   seatsLeft: number;
   location: string;
   id: string;
+  description: string;
 };
 
 const EventItem = (props: Props) => {

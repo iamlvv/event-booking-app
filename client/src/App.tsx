@@ -6,6 +6,7 @@ import ConfirmBookingPage from "./pages/ConfirmBooking/ConfirmBookingPage";
 import AllBookingsPage from "./pages/AllBookings/AllBookingsPage";
 import StatisticsPage from "./pages/Statistics/StatisticsPage";
 import CreateEventPage from "./pages/CreateEvent/CreateEventPage";
+import PublishEventsPage from "./pages/PublishEvents/PublishEventsPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/allbookings" element={<AllBookingsPage />} />
           <Route path="/statistics" element={<StatisticsPage />} />
           <Route path="/createnewevent" element={<CreateEventPage />} />
+          <Route path="/publishevents" element={<PublishEventsPage />} />
         </Routes>
       </BrowserRouter>
     </div>
