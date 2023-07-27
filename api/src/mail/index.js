@@ -26,7 +26,7 @@ module.exports.sendVerificationCode = async (booking,event) => {
     <li><b>Total Price: </b>${booking.bookingPrice}</li>
     <li><b>Verification Code: </b>${booking.verificationCode}</li>
     </ul>
-    <p>Please use this verification code to check your booking from our website.</p>
+    <p>Please use this verification code to check your booking from our website: http://localhost:3000/allbookings</p>
     <p>Thank you and have a good day!</p>
     <p>Netpower Team</p>`,
   })

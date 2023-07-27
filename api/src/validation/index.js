@@ -24,7 +24,7 @@ const bookingSchema = Joi.object({
 
 const searchBookingSchema = Joi.object({
   phoneNumber: Joi.string().trim().required().max(10),
-  verificationCode:Joi.string().trim().max(9)
+  verificationCode:Joi.string().trim().allow('').max(9)
 })
 
 module.exports = {
