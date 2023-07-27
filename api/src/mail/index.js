@@ -7,7 +7,8 @@ module.exports.sendVerificationCode = async (booking,event) => {
       user: 'netpower.booking@gmail.com',
       pass: process.env.GMAIL_PASSWORD
     }
-  });
+  })
+  
   await transporter.sendMail({
     from: 'netpower.booking@gmail.com',
     to: booking.email,

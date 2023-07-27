@@ -12,9 +12,14 @@ const createEvent = (newEvent, seats, file) => {
       couplePrice,
       normalSeatNum,
       vipSeatNum,
-      coupleSeatNum } = newEvent
+      coupleSeatNum,
+      isPublished } = newEvent
 
     const seatsRemain = parseInt(normalSeatNum) + parseInt(vipSeatNum) + parseInt(coupleSeatNum)
+
+    let isPublishedBoolean = false
+    if (isPublished === 'true') isPublishedBoolean = true
+
     try {
       const createdEvent = await Event.create({
         name: name,
@@ -31,7 +36,8 @@ const createEvent = (newEvent, seats, file) => {
         image: {
           url: file.path,
           fileName: file.filename
-        }
+        },
+        isPublished: isPublishedBoolean
       })
       if (createdEvent) {
         resolve(createdEvent)
@@ -46,9 +52,7 @@ const getEvents = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const events = await Event.find({})
-      if (events) {
-        resolve(events)
-      }
+      resolve(events)
     } catch (e) {
       reject(e)
     }
@@ -61,8 +65,8 @@ const getEventById = (id) => {
     try {
       const foundEvent = await Event.findById(id)
       if (!foundEvent) {
-        reject({
-          message:'Cannot find that event!'
+        return reject({
+          message: 'Cannot find that event!'
         })
       }
       resolve(foundEvent)
@@ -72,8 +76,26 @@ const getEventById = (id) => {
   })
 }
 
+
+const publishEvent = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const updatedEvent = await Event.findByIdAndUpdate(id, { isPublished: true },{new: true})
+      if (!updatedEvent) {
+        return reject({
+          message: 'Cannot find that event!'
+        })
+      }
+      resolve(updatedEvent)
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
 module.exports = {
   createEvent,
   getEvents,
-  getEventById
+  getEventById,
+  publishEvent
 }

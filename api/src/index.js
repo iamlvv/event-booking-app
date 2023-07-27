@@ -6,22 +6,13 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const multer = require('multer')
-
 //
 
 // Modules
-const Event = require('./models/Event')
-const Booking = require('./models/Booking')
-const insertSeats = require('./utils/insertSeats')
-const generateRandomCode = require('./utils/genRandomCode')
-const isEmptyObject = require('./utils/isEmptyObject')
 const { storage } = require('./cloudinary/index')
-const {sendVerificationCode} = require('./mail/index')
 const routes = require('./routes/index')
 //
 
-const upload = multer({ storage })
 const app = express()
 
 app.use(express.json())

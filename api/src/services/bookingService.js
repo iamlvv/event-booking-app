@@ -1,5 +1,6 @@
 const Booking = require('../models/Booking')
-const sendVerificationCode = require('../mail/index')
+const Event = require('../models/Event')
+const {sendVerificationCode} = require('../mail/index')
 
 const getBooking = (reqBody) => {
   return new Promise(async (resolve, reject) => {
@@ -7,9 +8,10 @@ const getBooking = (reqBody) => {
       const { phoneNumber, verificationCode } = reqBody
       const foundBooking = await Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
       if (!foundBooking) {
-        reject({
+         return reject({
           message: 'Cannot find your booking!'
         })
+        
       }
       resolve(foundBooking)
     } catch (e) {
@@ -18,10 +20,11 @@ const getBooking = (reqBody) => {
   })
 }
 
-const createBooking = (reqBody, verificationCode) => {
+const createBooking = (reqBody, verificationCode, id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { bookerName, email, phoneNumber, seatName, bookingPrice } = reqBody
+
       const newBooking = new Booking({
         event: id,
         bookerName: bookerName,
@@ -31,19 +34,29 @@ const createBooking = (reqBody, verificationCode) => {
         bookingPrice: bookingPrice,
         verificationCode: verificationCode
       })
+
       const bookedEvent = await Event.findById(id)
       if (!bookedEvent) {
-        reject({
+        return reject({
           message: 'Cannot find that event!'
         })
       }
+
+      let validReservedSeat = 0
+
+
       for (let seat of bookedEvent.seats) {
-        if (seatName.includes(seat.seatName)) {
+        if (seatName.includes(seat.seatName) && seat.isReserved === false) {
+          validReservedSeat += 1
           seat.isReserved = true
           seat.phoneNumber = phoneNumber
+        } else if (seatName.includes(seat.seatName) && seat.isReserved === true) {
+          return reject({
+            message: 'Cannot choose this seat!'
+          })
         }
       }
-      bookedEvent.seatsRemain -= seatName.length
+      bookedEvent.seatsRemain -= validReservedSeat
       await sendVerificationCode(newBooking, bookedEvent)
       await bookedEvent.save()
       await newBooking.save()
