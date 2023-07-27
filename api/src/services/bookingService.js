@@ -7,7 +7,7 @@ const getBooking = (reqBody) => {
     try {
       const { phoneNumber, verificationCode } = reqBody
       if (verificationCode) {
-        const foundBooking = await Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
+        const foundBooking = await Booking.find({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
         if (!foundBooking) {
           return reject({
             message: 'Cannot find your booking!'
