@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { HTMLAttributes, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
@@ -12,6 +12,7 @@ import {
 import EventDetailConfirm from "./components/EventDetailConfirm";
 import UserInput from "./components/UserInput";
 import Swal from "sweetalert2";
+import { EMAIL_PATTERN } from "../../constants/patternConstants";
 type Props = {};
 
 const ConfirmBookingPage = (props: Props) => {
@@ -28,6 +29,18 @@ const ConfirmBookingPage = (props: Props) => {
   const [phoneNumber, setPhoneNumber] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
   const [attendantName, setAttendantName] = React.useState<string>("");
+
+  const [errorEmail, setErrorEmail] = React.useState<string>("");
+
+  const isValidEmail = (email: string) => {
+    return EMAIL_PATTERN.test(email);
+  };
+  const handleChangeEmail = (e: any) => {
+    if (!isValidEmail(e.target.value)) {
+      setErrorEmail("Invalid email");
+    } else setErrorEmail("");
+    setEmail(e.target.value);
+  };
 
   useEffect(() => {
     getEventByIdForBooking({ id, setEventName, setStartDate, setLocation });
@@ -71,9 +84,10 @@ const ConfirmBookingPage = (props: Props) => {
             phoneNumber={phoneNumber}
             setPhoneNumber={setPhoneNumber}
             email={email}
-            setEmail={setEmail}
+            setEmail={handleChangeEmail}
             attendantName={attendantName}
             setAttendantName={setAttendantName}
+            errorEmail={errorEmail}
           />
           <div className="text-center button w-40 m-auto item-rounded p-2 mt-5 text-3xl heading">
             <button type="submit">submit</button>

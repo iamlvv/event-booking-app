@@ -9,6 +9,7 @@ type Props = {
   setEmail: (email: string) => void;
   attendantName: string;
   setAttendantName: (attendantName: string) => void;
+  errorEmail: string;
 };
 
 const UserInput = (props: Props) => {
@@ -23,6 +24,7 @@ const UserInput = (props: Props) => {
             }}
           >
             <TextField
+              type="number"
               id="outlined-basic"
               label="Phone Number"
               variant="outlined"
@@ -44,10 +46,13 @@ const UserInput = (props: Props) => {
               label="Email"
               variant="outlined"
               value={props.email || ""}
-              onChange={(e) => props.setEmail(e.target.value)}
+              onChange={(e: any) => props.setEmail(e)}
               required
             />
           </Box>
+          {props.errorEmail && (
+            <div className="text-red-500">{props.errorEmail}</div>
+          )}
         </div>
         <div className="flex flex-row gap-x-5 items-center heading">
           <div>attendant's name:</div>

@@ -40,7 +40,6 @@ const SeatMap = (props: Props) => {
   }, [selectedSeatList]);
 
   const handleChooseSeat = (seat: ISeatDetail) => {
-    console.log(seat);
     setSelectedSeat((selectedSeat) => {
       if (selectedSeat === seat) {
         return null;

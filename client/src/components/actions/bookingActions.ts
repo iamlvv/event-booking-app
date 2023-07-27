@@ -59,7 +59,6 @@ export const getBookingByPhoneNumberAndVerificationCode = async (
         verificationCode: props.verificationCode,
       }
     );
-    console.log(response.data);
     props.setBooking(response.data);
   } catch (error) {
     Swal.fire({

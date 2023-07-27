@@ -19,7 +19,7 @@ const EventItem = (props: Props) => {
   };
   return (
     <div className="border item-rounded event-item hover:shadow-md transition ease-in-out">
-      <div>
+      <div className="image-div">
         <img src={props.src} alt={props.alt} className="img-rounded" />
       </div>
       <div className="flex flex-row justify-between p-5">

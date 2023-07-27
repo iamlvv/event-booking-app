@@ -36,7 +36,6 @@ const BookingPage = (props: Props) => {
     //   setSelectedSeatList(JSON.parse(selectedSeatList));
     // }
   }, []);
-  console.log(eventDetail);
   // Calculate tota l price when selectedSeatList or seatPrices changes
   useEffect(() => {
     let totalPrice = 0;

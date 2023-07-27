@@ -41,7 +41,6 @@ type getEventByIdProps = {
 export const getEventById = async (props: getEventByIdProps) => {
   try {
     const response = await axios.get(GET_EVENT_BY_ID_API_URL + `${props.id}`);
-    console.log("response data", response.data);
     props.setEvent(response.data);
     props.setSeatList(response.data.seats);
     props.setSeatPrices(response.data.price);

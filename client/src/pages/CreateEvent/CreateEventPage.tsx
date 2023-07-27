@@ -32,6 +32,14 @@ const CreateEventPage = (props: Props) => {
       });
       return;
     }
+    if ((startDate as Date) < new Date()) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please select a date and a time in the future!",
+      });
+      return;
+    }
     if (uploadImage === "fileurl") {
       Swal.fire({
         icon: "error",
