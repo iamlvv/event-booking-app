@@ -1,19 +1,28 @@
 const Booking = require('../models/Booking')
 const Event = require('../models/Event')
-const {sendVerificationCode} = require('../mail/index')
+const { sendVerificationCode } = require('../mail/index')
 
 const getBooking = (reqBody) => {
   return new Promise(async (resolve, reject) => {
     try {
       const { phoneNumber, verificationCode } = reqBody
-      const foundBooking = await Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
-      if (!foundBooking) {
-         return reject({
-          message: 'Cannot find your booking!'
-        })
-        
+      if (verificationCode) {
+        const foundBooking = await Booking.findOne({ phoneNumber: phoneNumber, verificationCode: verificationCode }).populate('event')
+        if (!foundBooking) {
+          return reject({
+            message: 'Cannot find your booking!'
+          })
+        }
+        resolve(foundBooking)
+      } else {
+        const foundBookings = await Booking.find({ phoneNumber: phoneNumber}).populate('event')
+        if (!foundBookings) {
+          return reject({
+            message: 'You do not have any booking!'
+          })
+        }
+        resolve(foundBookings)
       }
-      resolve(foundBooking)
     } catch (e) {
       reject(e)
     }
