@@ -19,7 +19,6 @@ const createEvent = (newEvent, seats, file) => {
 
     let isPublishedBoolean = false
     if (isPublished === 'true') isPublishedBoolean = true
-
     try {
       const createdEvent = await Event.create({
         name: name,
@@ -34,7 +33,7 @@ const createEvent = (newEvent, seats, file) => {
         seats: seats,
         seatsRemain: seatsRemain,
         image: {
-          url: file.path,
+          url: file.path.replace('/upload', '/upload/w_383,h_153'),
           fileName: file.filename
         },
         isPublished: isPublishedBoolean
@@ -80,7 +79,7 @@ const getEventById = (id) => {
 const publishEvent = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const updatedEvent = await Event.findByIdAndUpdate(id, { isPublished: true },{new: true})
+      const updatedEvent = await Event.findByIdAndUpdate(id, { isPublished: true }, { new: true })
       if (!updatedEvent) {
         return reject({
           message: 'Cannot find that event!'
