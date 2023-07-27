@@ -9,8 +9,7 @@ const PublishEventsPage = (props: Props) => {
   return (
     <div>
       <Header />
-      <div>
-        <h2>these are events that have not been published</h2>
+      <div className="mb-20 min-h-screen">
         <UnPublishedEvents />
       </div>
       <Footer />

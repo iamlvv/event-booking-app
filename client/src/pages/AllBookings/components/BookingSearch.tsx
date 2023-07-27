@@ -41,7 +41,6 @@ const BookingSearch = (props: Props) => {
             variant="outlined"
             value={props.verificationCode || ""}
             onChange={(e) => props.setVerificationCode(e.target.value)}
-            required
           />
         </Box>
       </div>

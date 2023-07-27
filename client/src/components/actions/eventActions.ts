@@ -23,9 +23,15 @@ type getAllEventsProps = {
 export const getAllEvents = async (props: getAllEventsProps) => {
   try {
     const response = await axios.get(GET_ALL_EVENTS_API_URL);
-    props.setEvents(response.data);
-    props.setFilteredEvents(response.data);
-    props.setOriginalEventsList(response.data);
+    props.setEvents(
+      response.data.filter((event: IEventDetail) => event.isPublished === true)
+    );
+    props.setFilteredEvents(
+      response.data.filter((event: IEventDetail) => event.isPublished === true)
+    );
+    props.setOriginalEventsList(
+      response.data.filter((event: IEventDetail) => event.isPublished === true)
+    );
   } catch (error) {
     console.log(error);
   }
@@ -175,6 +181,7 @@ export const getEventsWithSeats = async (prop: getEventsWithSeatsProps) => {
 type getUnpublishedEventsProps = {
   setUnPublishedEvents: Dispatch<SetStateAction<Array<IEventDetail>>>;
   setNumberOfUnPublishedEvents: Dispatch<SetStateAction<number>>;
+  setOriginalEventsList: Dispatch<SetStateAction<Array<IEventDetail>>>;
 };
 
 export const getUnpublishedEvents = async (
@@ -183,6 +190,7 @@ export const getUnpublishedEvents = async (
   try {
     const response = await axios.get(GET_ALL_UNPUBLISHED_EVENTS_API_URL);
     props.setUnPublishedEvents(response.data);
+    props.setOriginalEventsList(response.data);
     props.setNumberOfUnPublishedEvents(response.data.length);
   } catch (error) {
     console.log(error);
@@ -196,7 +204,9 @@ type publishAnEventProps = {
 
 export const publishAnEvent = async (props: publishAnEventProps) => {
   try {
-    const response = await axios.put(PUBLISH_AN_EVENT_API_URL + `/${props.id}`);
+    const response = await axios.post(
+      PUBLISH_AN_EVENT_API_URL + `/${props.id}` + `/publish`
+    );
     Swal.fire({
       icon: "success",
       title: "Publish event success",

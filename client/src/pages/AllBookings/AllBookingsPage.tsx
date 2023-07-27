@@ -10,9 +10,7 @@ type Props = {};
 const AllBookingsPage = (props: Props) => {
   const [phoneNumber, setPhoneNumber] = React.useState<string>("");
   const [verificationCode, setVerificationCode] = React.useState<string>("");
-  const [booking, setBooking] = React.useState<IBookingDetail>(
-    {} as IBookingDetail
-  ); // [
+  const [booking, setBooking] = React.useState<Array<IBookingDetail>>([]); // [
 
   const handleSearchBooking = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +20,6 @@ const AllBookingsPage = (props: Props) => {
       setBooking,
     });
   };
-  console.log(booking);
   return (
     <div>
       <Header />
@@ -45,7 +42,13 @@ const AllBookingsPage = (props: Props) => {
               <button type="submit">Search</button>
             </div>
           </form>
-          {booking._id ? <BookingItem booking={booking} /> : null}
+          {booking.length > 0 ? (
+            booking.map((booking) => {
+              return <BookingItem booking={booking} />;
+            })
+          ) : (
+            <div className="text-center text-2xl mt-10">No booking found</div>
+          )}
         </div>
       </div>
       <Footer />
