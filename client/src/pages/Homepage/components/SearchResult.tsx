@@ -16,12 +16,12 @@ const SearchResult = (props: Props) => {
     <div className="absolute bg-white search-result select-none">
       <div className="flex flex-col gap-y-5">
         {props.filteredEvents.length > 0 ? (
-          props.filteredEvents.slice(0, 3).map((event) => (
+          props.filteredEvents.map((event) => (
             <div
               className="flex flex-row gap-x-5 items-center justify-between hover:bg-gray-50 item-rounded p-5"
               key={event._id}
             >
-              <div>
+              <div className="flex justify-center">
                 <img
                   width={100}
                   height={100}
@@ -32,10 +32,10 @@ const SearchResult = (props: Props) => {
               <div>
                 <h2 className="text-2xl">{event.name}</h2>
                 <p>{event.location}</p>
-                <p>{event.startDate}</p>
+                <p>{new Date(event.startDate).toLocaleString()}</p>
               </div>
               <div
-                className="button p-5 item-rounded cursor-pointer"
+                className="button p-2 item-rounded cursor-pointer"
                 onClick={() => handleBooking(event._id)}
               >
                 Book now

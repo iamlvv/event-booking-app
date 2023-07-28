@@ -62,7 +62,7 @@ const CreateEventPage = (props: Props) => {
     formData.append("normalPrice", normalPrice.toString());
     formData.append("description", description);
     formData.append("isPublished", isPublished.toString());
-    fetch("http://localhost:5000/api/events/new", {
+    fetch("http://localhost:5000/api/event", {
       method: "POST",
       body: formData,
     })

@@ -46,7 +46,7 @@ export const createNewBooking = async (props: createNewBookingProps) => {
 type getBookingByPhoneNumberAndVerificationCodeProps = {
   phoneNumber: string;
   verificationCode: string;
-  setBooking: Dispatch<SetStateAction<IBookingDetail>>;
+  setBooking: Dispatch<SetStateAction<IBookingDetail[]>>;
 };
 export const getBookingByPhoneNumberAndVerificationCode = async (
   props: getBookingByPhoneNumberAndVerificationCodeProps
