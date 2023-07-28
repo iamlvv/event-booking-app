@@ -73,10 +73,11 @@ const getMostBookedEvents = async (req, res) => {
       numSeats.push(event.seats.length - event.seatsRemain)
     }
     numSeats.sort().reverse()
+    console.log(numSeats)
     for (let i = 0; i < 5; i++) {
       for (let event of events) {
         if (event.seats.length - event.seatsRemain === numSeats[i])
-          topEvents.push(event)
+          if (topEvents.length < 5) topEvents.push(event)
       }
     }
     return res.status(200).json(topEvents)
