@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import stage from "../../../assets/img/stage.png";
 import { ISeatDetail } from "../../../interface/Interfaces";
 import {
@@ -6,7 +6,6 @@ import {
   NORMAL_SEAT_AVAILABLE,
   SEAT_RESERVED,
   VIP_SEAT_AVAILABLE,
-  VIP_SEAT_SELECTED,
 } from "../../../constants/seatsConstants";
 
 type Props = {

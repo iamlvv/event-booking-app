@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IEventDetail } from "../../../interface/Interfaces";
 import {
   getEventsWithSeats,
@@ -42,7 +42,7 @@ const EventsBookingStatus = (props: Props) => {
               >
                 <div>
                   <img
-                    src="https://picsum.photos/383/153"
+                    src={event.image ? event.image.url : ""}
                     alt="event"
                     width={100}
                   />
@@ -50,7 +50,7 @@ const EventsBookingStatus = (props: Props) => {
                 <div>
                   <p>{event.name}</p>
                   <p>{event.location}</p>
-                  <p>{event.startDate}</p>
+                  <p>{new Date(event.startDate).toLocaleString()}</p>
                 </div>
               </div>
             ))}
@@ -62,15 +62,15 @@ const EventsBookingStatus = (props: Props) => {
           events still have seats: {numberOfEventsStillHaveSeats}
         </h2>
         {numberOfEventsStillHaveSeats > 0 ? (
-          <div className="border item-rounded p-5 hover:scroll-auto lists overflow-y-scroll">
+          <div className="border item-rounded px-2 hover:scroll-auto lists overflow-y-scroll flex flex-col gap-y-5">
             {eventsStillHaveSeats.map((event) => (
               <div
                 key={event._id}
-                className="flex flex-row gap-x-5 items-center"
+                className="flex flex-row gap-x-5 items-center hover:bg-gray-50 item-rounded p-5"
               >
                 <div>
                   <img
-                    src="https://picsum.photos/383/153"
+                    src={event.image ? event.image.url : ""}
                     alt="event"
                     width={100}
                   />
@@ -78,7 +78,7 @@ const EventsBookingStatus = (props: Props) => {
                 <div>
                   <p>{event.name}</p>
                   <p>{event.location}</p>
-                  <p>{event.startDate}</p>
+                  <p>{new Date(event.startDate).toLocaleString()}</p>
                 </div>
               </div>
             ))}

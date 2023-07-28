@@ -139,6 +139,11 @@ code {
   max-height: 300px;
 }
 
+.published-events-content {
+  max-height: 1024px;
+  overflow-y: auto;
+}
+
 @media screen and (min-width: 1200px) {
   body {
     width: 1440px;

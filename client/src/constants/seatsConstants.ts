@@ -1,6 +1,6 @@
 // ClassName for seat
 export const SEAT =
-  "w-20 h-10 m-1 text-center font-bold rounded-md flex justify-center items-center";
+  "w-20 h-10 m-1 text-center font-bold rounded-md flex justify-center items-center select-none";
 
 export const NORMAL_SEAT_AVAILABLE =
   "seat bg-green-100 hover:bg-green-200 cursor-pointer pointer-events-none" +

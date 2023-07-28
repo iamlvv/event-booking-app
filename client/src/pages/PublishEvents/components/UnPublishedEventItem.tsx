@@ -7,7 +7,6 @@ type Props = {
 };
 
 const UnPublishedEventItem = (props: Props) => {
-  console.log(props.event);
   const handlePublishEvent = (id: string) => {
     publishAnEvent({ id });
   };
@@ -19,7 +18,8 @@ const UnPublishedEventItem = (props: Props) => {
       <div className="flex flex-row justify-between p-5">
         <div className="flex flex-col gap-y-5">
           <div>{props.event.name}</div>
-          <div>{props.event.startDate}</div>
+          <div>{new Date(props.event.startDate).toLocaleString()}</div>
+          <div>{props.event.seatsRemain} seats left</div>
         </div>
         <div className="flex flex-col items-center gap-y-10">
           <div>{props.event.location}</div>

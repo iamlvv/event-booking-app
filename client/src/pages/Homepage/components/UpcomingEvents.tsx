@@ -1,6 +1,6 @@
-import React from "react";
 import EventItem from "./EventItem";
 import { IEventDetail } from "../../../interface/Interfaces";
+import ReactLoading from "react-loading";
 
 type Props = {
   events: IEventDetail[];
@@ -28,7 +28,13 @@ const UpcomingEvents = (props: Props) => {
               />
             ))
         ) : (
-          <div className=" text-red-500 text-2xl">No result found.</div>
+          <ReactLoading
+            type={"spin"}
+            color={"red"}
+            height={100}
+            width={100}
+            className="mx-auto"
+          />
         )}
       </div>
     </div>
