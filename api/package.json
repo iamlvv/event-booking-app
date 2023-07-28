@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "cloudinary": "^1.39.0",
     "cors": "^2.8.5",
