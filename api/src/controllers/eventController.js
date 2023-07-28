@@ -29,7 +29,7 @@ const getEvents = async (req, res) => {
     const allEvents = await eventService.getEvents()
     if (q) {
       const searchedEvents = allEvents.filter((event) => {
-        return event.name.includes(q.trim())
+        return event.name.toLowerCase().includes(q.trim().toLowerCase())
       })
       if (!searchedEvents.length) {
         return res.status(404).json({
