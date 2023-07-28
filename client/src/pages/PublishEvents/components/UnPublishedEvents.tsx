@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react";
 import { IEventDetail } from "../../../interface/Interfaces";
 import { getUnpublishedEvents } from "../../../components/actions/eventActions";
 import UnPublishedEventItem from "./UnPublishedEventItem";
+import {
+  NAVIGATION_BUTTON_ACTIVE,
+  NAVIGATION_BUTTON_INACTIVE,
+} from "../../../constants/navigationConstants";
+import ReactLoading from "react-loading";
 
-type Props = {};
+type Props = {
+  itemsPerPage: number;
+};
 
 const UnPublishedEvents = (props: Props) => {
   const [originalEventsList, setOriginalEventsList] = useState<
@@ -31,7 +38,11 @@ const UnPublishedEvents = (props: Props) => {
       <div className="flex flex-row gap-x-10 my-10">
         <button
           type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className={
+            typeOfEvents === "all"
+              ? NAVIGATION_BUTTON_ACTIVE
+              : NAVIGATION_BUTTON_INACTIVE
+          }
           onClick={() => {
             setTypeOfEvents("all");
             setUnPublishedEvents(originalEventsList);
@@ -41,7 +52,11 @@ const UnPublishedEvents = (props: Props) => {
         </button>
         <button
           type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className={
+            typeOfEvents === "unpublished"
+              ? NAVIGATION_BUTTON_ACTIVE
+              : NAVIGATION_BUTTON_INACTIVE
+          }
           onClick={() => {
             setTypeOfEvents("unpublished");
             setUnPublishedEvents(
@@ -55,7 +70,11 @@ const UnPublishedEvents = (props: Props) => {
         </button>
         <button
           type="button"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className={
+            typeOfEvents === "published"
+              ? NAVIGATION_BUTTON_ACTIVE
+              : NAVIGATION_BUTTON_INACTIVE
+          }
           onClick={() => {
             setTypeOfEvents("published");
             setUnPublishedEvents(
@@ -68,14 +87,24 @@ const UnPublishedEvents = (props: Props) => {
           Published
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-10">
-        {unPublishedEvents.map((event) => {
-          return (
-            <div key={event._id}>
-              <UnPublishedEventItem event={event} />
-            </div>
-          );
-        })}
+      <div className="grid grid-cols-3 gap-10 published-events-content">
+        {unPublishedEvents.length > 0 ? (
+          unPublishedEvents.map((event) => {
+            return (
+              <div key={event._id}>
+                <UnPublishedEventItem event={event} />
+              </div>
+            );
+          })
+        ) : (
+          <ReactLoading
+            type={"spin"}
+            color={"red"}
+            height={100}
+            width={100}
+            className="mx-auto"
+          />
+        )}
       </div>
     </div>
   );

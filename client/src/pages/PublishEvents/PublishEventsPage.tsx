@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import UnPublishedEvents from "./components/UnPublishedEvents";
@@ -10,7 +9,7 @@ const PublishEventsPage = (props: Props) => {
     <div>
       <Header />
       <div className="mb-20 min-h-screen">
-        <UnPublishedEvents />
+        <UnPublishedEvents itemsPerPage={9} />
       </div>
       <Footer />
     </div>

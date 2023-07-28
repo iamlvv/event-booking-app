@@ -5,7 +5,7 @@ import SearchBar from "./components/SearchBar";
 import UpcomingEvents from "./components/UpcomingEvents";
 import { getAllEvents } from "../../components/actions/eventActions";
 import { IEventDetail } from "../../interface/Interfaces";
-import Pagination from "./components/Pagination";
+import Pagination from "../../components/Pagination";
 import SearchResult from "./components/SearchResult";
 
 type Props = {

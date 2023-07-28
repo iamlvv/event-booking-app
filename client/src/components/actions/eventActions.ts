@@ -10,6 +10,7 @@ import {
   GET_ALL_EVENTS_API_URL,
   GET_ALL_UNPUBLISHED_EVENTS_API_URL,
   GET_EVENT_BY_ID_API_URL,
+  GET_FIVE_HIGHEST_BOOKING_EVENTS_API_URL,
   PUBLISH_AN_EVENT_API_URL,
 } from "../../constants/APIConstants";
 import { Dispatch, SetStateAction } from "react";
@@ -216,6 +217,19 @@ export const publishAnEvent = async (props: publishAnEventProps) => {
         window.location.reload();
       }
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// This function is used to get 5 events that have the highest bookings
+type getTop5EventsProps = {
+  setEvents: Dispatch<SetStateAction<Array<IEventDetail>>>;
+};
+export const getTop5Events = async (props: getTop5EventsProps) => {
+  try {
+    const response = await axios.get(GET_FIVE_HIGHEST_BOOKING_EVENTS_API_URL);
+    props.setEvents(response.data);
   } catch (error) {
     console.log(error);
   }

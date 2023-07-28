@@ -1,4 +1,3 @@
-import React from "react";
 import { IEventDetail } from "../../../interface/Interfaces";
 import { useNavigate } from "react-router-dom";
 
