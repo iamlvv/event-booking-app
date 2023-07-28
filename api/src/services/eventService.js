@@ -92,9 +92,21 @@ const publishEvent = (id) => {
   })
 }
 
+const getMostBookedEvents = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const events = await Event.find({})
+      resolve(events)
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
 module.exports = {
   createEvent,
   getEvents,
   getEventById,
-  publishEvent
+  publishEvent,
+  getMostBookedEvents
 }
