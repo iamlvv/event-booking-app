@@ -15,10 +15,12 @@ const EventDetail = (props: Props) => {
         />
       </div>
       <div className="flex flex-col gap-y-5">
-        <div>{props.eventDetail.name}</div>
-        <div>{new Date(props.eventDetail.startDate).toLocaleString()}</div>
-        <div>{props.eventDetail.location}</div>
-        <div>{props.eventDetail.description}</div>
+        <div>Event name: {props.eventDetail.name}</div>
+        <div>
+          Start Date: {new Date(props.eventDetail.startDate).toLocaleString()}
+        </div>
+        <div>Location: {props.eventDetail.location}</div>
+        <div>Description: {props.eventDetail.description}</div>
       </div>
     </div>
   );

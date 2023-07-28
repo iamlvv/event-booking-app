@@ -228,6 +228,7 @@ const CreateEventInput = (props: Props) => {
             onChange={(e) => props.setIsPublished(e.target.checked)}
             color="secondary"
           />
+          <div>{props.isPublished ? "Yes" : "No"}</div>
         </div>
       </div>
     </div>

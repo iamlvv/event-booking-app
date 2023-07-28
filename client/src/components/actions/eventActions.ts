@@ -123,7 +123,9 @@ export const searchEvent = async (props: searchEventProps) => {
     const response = await axios.get(
       GET_ALL_EVENTS_API_URL + `?q=${props.searchValue}`
     );
-    props.setEvents(response.data);
+    props.setEvents(
+      response.data.filter((event: IEventDetail) => event.isPublished === true)
+    );
   } catch (error) {
     console.log(error);
   }

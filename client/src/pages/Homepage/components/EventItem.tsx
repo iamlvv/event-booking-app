@@ -15,6 +15,7 @@ type Props = {
 const EventItem = (props: Props) => {
   const navigate = useNavigate();
   const handleBookingEvent = () => {
+    if (props.seatsLeft === 0) return;
     navigate(`/booking/${props.id}`);
   };
   return (
@@ -31,7 +32,11 @@ const EventItem = (props: Props) => {
         <div className="flex flex-col items-center gap-y-10">
           <div>{props.location}</div>
           <div
-            className="button p-5 item-rounded cursor-pointer"
+            className={
+              props.seatsLeft === 0
+                ? "button p-5 item-rounded bg-gray-300 cursor-not-allowed"
+                : "button p-5 item-rounded cursor-pointer"
+            }
             onClick={handleBookingEvent}
           >
             Book now

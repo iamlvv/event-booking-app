@@ -97,7 +97,7 @@ const SeatMap = (props: Props) => {
         />
       </div>
       <div className="flex flex-col items-center gap-y-10 mb-10">
-        <div className="flex flex-row justify-center">
+        <div className="grid grid-cols-5 justify-center">
           {props.seatList.map(
             (seat) =>
               seat.seatType === "v" && (
@@ -118,7 +118,7 @@ const SeatMap = (props: Props) => {
               )
           )}
         </div>
-        <div className="flex flex-row justify-center">
+        <div className="grid grid-cols-5 justify-center">
           {props.seatList.map(
             (seat) =>
               seat.seatType === "c" && (
@@ -139,7 +139,7 @@ const SeatMap = (props: Props) => {
               )
           )}
         </div>
-        <div className="flex flex-row justify-center">
+        <div className="grid grid-cols-5 justify-center">
           {props.seatList.map(
             (seat) =>
               seat.seatType === "n" && (
